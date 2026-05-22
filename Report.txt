@@ -1,51 +1,46 @@
-TOTAL LOGS COUNT: 20
-VALID LOGS COUNT: 7
-CORRUPTED LOGS COUNT: 13
+TOTAL LOGS COUNT: 10
+VALID LOGS COUNT: 4
+CORRUPTED LOGS COUNT: 6
 
-AVERAGE RESPONSE TIME: 1697490ms
+AVERAGE RESPONSE TIME: 1769469ms
 
 LOG WITH LOWEST REPONSE TIME:
-                     Date: 12/02/28
-                     Time: 21/01/04
-                     IP Address: 17.188.75.205
-                     Method: PUT
-                     Route: /api/user
-                     Status: NO_STATUS
-                     Response Time: 356ms
+                     Date: 06/04/42
+                     Time: 21/52/01
+                     IP Address: 229.82.89.171
+                     Method: GET
+                     Route: /api/login
+                     Status: 400
+                     Response Time: 469ms
 
 LOG WITH HIGHEST REPONSE TIME:
-                     Date: 18/03/33
-                     Time: 21:01:04
-                     IP Address: 18.138.208.158
-                     Method: DELETE
-                     Route: /api/login
-                     Status: -
-                     Response Time: 774000ms
+                     Date: 21/02/32
+                     Time: 21/52/01
+                     IP Address: 113.81.220.110
+                     Method: POST
+                     Route: /api/register
+                     Status: 200
+                     Response Time: 975000ms
 
 
 STATUS TABLE AND FREQUENCIES
-Status NO_STATUS | Frequency 1
-Status 500 | Frequency 2
-Status 200 | Frequency 2
+Status 500 | Frequency 1
+Status 200 | Frequency 1
+Status 400 | Frequency 1
 
 
 IP TABLE AND FREQUENCIES
-IP 70.217.169.49 | Frequency 1
-IP 17.188.75.205 | Frequency 1
-IP 12.72.66.214 | Frequency 1
-IP 197.225.208.185 | Frequency 1
-IP 9.101.44.220 | Frequency 1
-IP 65.179.64.100 | Frequency 1
-IP 18.138.208.158 | Frequency 1
+IP 101.88.73.55 | Frequency 1
+IP 113.81.220.110 | Frequency 1
+IP 48.129.147.11 | Frequency 1
+IP 229.82.89.171 | Frequency 1
 
 
 ROUTE TABLE AND FREQUENCIES
-Route /api/user | Frequency 2
+Route /api/login | Frequency 2
 Route /api/register | Frequency 2
-Route /api/login | Frequency 3
 
 
 METHOD TABLE AND FREQUENCIES
-Method POST | Frequency 1
-Method DELETE | Frequency 3
-Method PUT | Frequency 3
+Method GET | Frequency 2
+Method POST | Frequency 2

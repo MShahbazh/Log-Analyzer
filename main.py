@@ -1,3 +1,5 @@
+# This is the main file which analyzes the server log file. it takes the custom file path as command line argument. If not provided, it will analyze test_logs/file.log as default
+
 import sys   
 from datetime import datetime, time, date
 import json
@@ -291,40 +293,41 @@ def route_table(result):
     return stat
     
 def generate_analysis_report(a,b,c,d,res,e,f,g,h):
-    fd=open('Report.txt','r+')
+    fd=open('Report.txt','w+')
     k=list(res.keys())
     fd.write(f"TOTAL LOGS COUNT: {e}\n")
     fd.write(f"VALID LOGS COUNT: {g}\n")
     fd.write(f"CORRUPTED LOGS COUNT: {f}\n\n")
-    fd.write(f"AVERAGE RESPONSE TIME: {h}ms\n\n")
-    fd.write("LOG WITH LOWEST REPONSE TIME:\n")
-    fd.write(f"                     Date: {res[k[0]]['Date']}\n")
-    fd.write(f"                     Time: {res[k[0]]['Orig_Time']}\n")
-    fd.write(f"                     IP Address: {res[k[0]]['Ip']}\n")
-    fd.write(f"                     Method: {res[k[0]]['Method']}\n")
-    fd.write(f"                     Route: {res[k[0]]['Route']}\n")
-    fd.write(f"                     Status: {res[k[0]]['Status']}\n")
-    fd.write(f"                     Response Time: {res[k[0]]['Time']}ms\n")
-    fd.write("\nLOG WITH HIGHEST REPONSE TIME:\n")
-    fd.write(f"                     Date: {res[k[-1]]['Date']}\n")
-    fd.write(f"                     Time: {res[k[-1]]['Orig_Time']}\n")
-    fd.write(f"                     IP Address: {res[k[-1]]['Ip']}\n")
-    fd.write(f"                     Method: {res[k[-1]]['Method']}\n")
-    fd.write(f"                     Route: {res[k[-1]]['Route']}\n")
-    fd.write(f"                     Status: {res[k[-1]]['Status']}\n")
-    fd.write(f"                     Response Time: {res[k[-1]]['Time']}ms\n")
-    fd.write("\n\nSTATUS TABLE AND FREQUENCIES\n")
-    for i,j in a.items():
-        fd.write(f"Status {i} | Frequency {j}\n")
-    fd.write("\n\nIP TABLE AND FREQUENCIES\n")
-    for i,j in b.items():
-        fd.write(f"IP {i} | Frequency {j}\n")
-    fd.write("\n\nROUTE TABLE AND FREQUENCIES\n")
-    for i,j in c.items():
-        fd.write(f"Route {i} | Frequency {j}\n")
-    fd.write("\n\nMETHOD TABLE AND FREQUENCIES\n")
-    for i,j in d.items():
-        fd.write(f"Method {i} | Frequency {j}\n")
+    if len(k)!=0:
+        fd.write(f"AVERAGE RESPONSE TIME: {h}ms\n\n")
+        fd.write("LOG WITH LOWEST REPONSE TIME:\n")
+        fd.write(f"                     Date: {res[k[0]]['Date']}\n")
+        fd.write(f"                     Time: {res[k[0]]['Orig_Time']}\n")
+        fd.write(f"                     IP Address: {res[k[0]]['Ip']}\n")
+        fd.write(f"                     Method: {res[k[0]]['Method']}\n")
+        fd.write(f"                     Route: {res[k[0]]['Route']}\n")
+        fd.write(f"                     Status: {res[k[0]]['Status']}\n")
+        fd.write(f"                     Response Time: {res[k[0]]['Time']}ms\n")
+        fd.write("\nLOG WITH HIGHEST REPONSE TIME:\n")
+        fd.write(f"                     Date: {res[k[-1]]['Date']}\n")
+        fd.write(f"                     Time: {res[k[-1]]['Orig_Time']}\n")
+        fd.write(f"                     IP Address: {res[k[-1]]['Ip']}\n")
+        fd.write(f"                     Method: {res[k[-1]]['Method']}\n")
+        fd.write(f"                     Route: {res[k[-1]]['Route']}\n")
+        fd.write(f"                     Status: {res[k[-1]]['Status']}\n")
+        fd.write(f"                     Response Time: {res[k[-1]]['Time']}ms\n")
+        fd.write("\n\nSTATUS TABLE AND FREQUENCIES\n")
+        for i,j in a.items():
+            fd.write(f"Status {i} | Frequency {j}\n")
+        fd.write("\n\nIP TABLE AND FREQUENCIES\n")
+        for i,j in b.items():
+            fd.write(f"IP {i} | Frequency {j}\n")
+        fd.write("\n\nROUTE TABLE AND FREQUENCIES\n")
+        for i,j in c.items():
+            fd.write(f"Route {i} | Frequency {j}\n")
+        fd.write("\n\nMETHOD TABLE AND FREQUENCIES\n")
+        for i,j in d.items():
+            fd.write(f"Method {i} | Frequency {j}\n")
     fd.close()
     
 
@@ -379,7 +382,7 @@ def main():
     else:
         file='test_logs/file.log'
     fd=open(file,'r')
-    res_fd=open('Lines_Result.txt','r+')
+    res_fd=open('Lines_Result.txt','w+')
     lines=[]
     status={}
     results={}

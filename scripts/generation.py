@@ -1,3 +1,5 @@
+# Generator which generates random logs. Takes one command line argument for the number of logs to be generated. Default is 10 
+
 import random 
 import sys 
 from datetime import datetime,timedelta
@@ -7,10 +9,10 @@ methods=['GET','POST','DELETE','PUT','']
 routes=['/api/user','/api/login','/api/register','']
 status=['200','400','500','-','']
 units=['ms','s','']
-CRASH_PROB=0.05
-UNCONTROLLED_FORMAT=0.05
-DATETIMESPLIT=0.4
-GIBB_TEXTEND=0.05     
+CRASH_PROB=0.05      # prob of producing crash formats
+UNCONTROLLED_FORMAT=0.05  # prob of producing datetime wihtout any constraints (invalid)
+DATETIMESPLIT=0.4 # prob of producing separate date and time
+GIBB_TEXTEND=0.05 # prob of producing gibberish text
 
 def damage_string(text,type):
     if random.random()<=CRASH_PROB:
@@ -235,7 +237,7 @@ for _ in range(0,nums):
         k=''
     k+='\n'
     fd.write(k)
-
+fd.close()
     
     
         
