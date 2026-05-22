@@ -19,3 +19,7 @@ this command also takes another argument. Add the path of file in case of custom
 
 ## 2) STACK CHOICE
 I looked at JS, C++ and RUST and Python for this project but went with Python CLI version due to tight time constraints. Even though RUST and C++ gives superior performance and efficiency for large datasets, they require more development time. Python accelerated the development speed due to its built-in functions. Its built in support for json, filing, string and date manipulation allowed me to quickly code the basic CLI version. 
+
+## 3) ONE REAL EDGE CASE
+Although I tried to implement all the edge cases which were mentioned. One of the edge cases which i implemented is to parse without depending on the position. Rather, it will parse based on patterns and formats which allowed me to code the solution easily. Moreover, I implemented parsing for mutiple ways of timestamps such as epoch, separate date and time, different formats. Without it, solving the problem would have been a lot harder. 
+
