@@ -33,6 +33,12 @@ One specific thing i changed was how ChatGPT recommended solutions which was bas
   
 ## 5) HONEST GAP
 There are many areas which definitely have certain types of gaps. For example the handling of highly irregular log strucutres. While the program supports multiple timestamp formats, the parsing becomes difficult to maintain as more edge cases as introduced. 
-Another limitation is that parser assumes a minimum ordering of fields such as timestamp and routes. For example: the parser assumes that status will only come after route and response time will come after status with no other fields or gibberish in between. As soon as this pattern is broken, the parser will fail and will produce incorrect results. However it doesn't care about order of timestamp and IP. 
+
+
+Another limitation is that parser assumes a minimum ordering of fields such as status and routes. For example: the parser assumes that status will only come after route and response time will come after status with no other fields or gibberish in between. As soon as this pattern is broken, the parser will fail and will produce incorrect results. However it doesn't care about order of timestamp and IP. 
+
+
 The parser deals with unix epoch timestamp by checking the size of timestamp and checking whether if it is a digit or not, which in my opinion is not so good strategy.
+
+
 Moreover, the parser code is messy, with another day provided, i will try to make code more clean and modular and probably more visually appealing by adding GUI. 
