@@ -1,17 +1,18 @@
 # Log Analyzer
 
-A Simple CLI based log Analyzer. It accepts a server log file as input and handles corrupted/damaged lines, parses multiple timestamps and response time formats. It then produces a per line result file `Lines_Result.txt`. JSON format log lines are also supported   
+A Simple CLI based log Analyzer. It accepts a server log file as input and handles corrupted/damaged lines, parses multiple timestamps and response time formats. It then produces a per line result file `Lines_Result.txt` along with `Report.txt` which contains report/summary of log file. JSON format log lines are also supported   
 
 ## Repo Structure  
-root  
-├── scripts  
-│   └── generation.py     
-├── test_logs  
-│   ├── file.log           
-│   └── Lines_Result.txt   
-├── main.py    
-├── ANSWERS.md  
-└── README.md  
+root
+├── scripts
+│   └── generation.py    # Generates a test log file with all edge cases  
+├── test_logs
+│   └── file.log         # Sample log file produced by generation.py which is used for testing
+├── main.py              # Entry point of Analyzer  
+├── Lines_Result.txt     # Contains the result status of valid or invaid logs along with collected information if valid  
+├── report.txt           # Contains Full Summary  
+├── ANSWERS.md           # Submission answers 
+└── README.md              
 
 ## Requirements  
 
@@ -27,6 +28,25 @@ root
 ```bash
 python --version
 ```
+
+
+### MACOS
+1. Go to https://www.python.org/downloads/ and download the macOS installer, or install via Homebrew:  
+```bash
+brew install python  
+```  
+2. 4. Open CMD and verify :   
+```bash
+python --version  
+```
+### LINUX
+1. Run the Command in Terminal:  
+```bash
+sudo apt update  
+sudo apt install python  
+python --version  
+```  
+
 
 ## How to Run  
 1. (Optional) Generate a test log file by running this command:  
