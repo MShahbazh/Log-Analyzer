@@ -249,14 +249,128 @@ def json_parser(line):
     main_string=nonjson_parser(main_string)
     return main_string
 
-def analysis(result):
-    routes_table={}
-    status_table={}
-    methods_table={}
-    IP_table={}
+def status_table(result):
+    stat={}
+    for i in result.values():
+        if i['Status'] != '-':
+            if i['Status'] in stat: 
+                stat[i['Status']] += 1
+            else:
+                stat[i['Status']] = 1 
+    stat=dict(sorted(stat.items(),key=lambda x:x[1]))
+    return stat
+
+def ip_table(result):
+    stat={}
+    for i in result.values():
+        if i['Ip'] in stat: 
+            stat[i['Ip']] += 1
+        else:
+            stat[i['Ip']] = 1 
+    stat=dict(sorted(stat.items(),key=lambda x:x[1]))
+    return stat
+
+def method_table(result):
+    stat={}
+    for i in result.values():
+        if i['Method'] in stat: 
+            stat[i['Method']]+=1
+        else:
+            stat[i['Method']]=1 
+    stat=dict(sorted(stat.items(),key=lambda x:x[1]))
+    return stat
+
+def route_table(result):
+    stat={}
+    for i in result.values():
+        if i['Route'] in stat: 
+            stat[i['Route']]+=1
+        else:
+            stat[i['Route']]=1 
+    stat=dict(sorted(stat.items(),key=lambda x:x[1]))
+    return stat
+    
+def generate_analysis_report(a,b,c,d,res,e,f,g,h):
+    fd=open('Report.txt','r+')
+    k=list(res.keys())
+    fd.write(f"TOTAL LOGS COUNT: {e}\n")
+    fd.write(f"VALID LOGS COUNT: {g}\n")
+    fd.write(f"CORRUPTED LOGS COUNT: {f}\n\n")
+    fd.write(f"AVERAGE RESPONSE TIME: {h}ms\n\n")
+    fd.write("LOG WITH LOWEST REPONSE TIME:\n")
+    fd.write(f"                     Date: {res[k[0]]['Date']}\n")
+    fd.write(f"                     Time: {res[k[0]]['Orig_Time']}\n")
+    fd.write(f"                     IP Address: {res[k[0]]['Ip']}\n")
+    fd.write(f"                     Method: {res[k[0]]['Method']}\n")
+    fd.write(f"                     Route: {res[k[0]]['Route']}\n")
+    fd.write(f"                     Status: {res[k[0]]['Status']}\n")
+    fd.write(f"                     Response Time: {res[k[0]]['Time']}ms\n")
+    fd.write("\nLOG WITH HIGHEST REPONSE TIME:\n")
+    fd.write(f"                     Date: {res[k[-1]]['Date']}\n")
+    fd.write(f"                     Time: {res[k[-1]]['Orig_Time']}\n")
+    fd.write(f"                     IP Address: {res[k[-1]]['Ip']}\n")
+    fd.write(f"                     Method: {res[k[-1]]['Method']}\n")
+    fd.write(f"                     Route: {res[k[-1]]['Route']}\n")
+    fd.write(f"                     Status: {res[k[-1]]['Status']}\n")
+    fd.write(f"                     Response Time: {res[k[-1]]['Time']}ms\n")
+    fd.write("\n\nSTATUS TABLE AND FREQUENCIES\n")
+    for i,j in a.items():
+        fd.write(f"Status {i} | Frequency {j}\n")
+    fd.write("\n\nIP TABLE AND FREQUENCIES\n")
+    for i,j in b.items():
+        fd.write(f"IP {i} | Frequency {j}\n")
+    fd.write("\n\nROUTE TABLE AND FREQUENCIES\n")
+    for i,j in c.items():
+        fd.write(f"Route {i} | Frequency {j}\n")
+    fd.write("\n\nMETHOD TABLE AND FREQUENCIES\n")
+    for i,j in d.items():
+        fd.write(f"Method {i} | Frequency {j}\n")
+    fd.close()
     
 
-    pass
+def cli_menu(results):
+     k=list(results.keys())
+     while True:
+        print("========== LOG ANALYZER ==========\n1. Show Summary\n2. Slowest Endpoints\n3. Fastest Endpoints\n4. Results\n5. Frequency Tables\n6. Exit")
+        print("Enter your choice: ")
+        x=int(input())
+        if x==1:
+            print("\n-----> Summary Generated...\n       You can View it through generated Report.txt file\n")
+        elif x==2:
+            if len(k)==0:
+                print("\n-----> No Valid Log Found\n")
+            else:
+                print(f"\n-----> Enter the number of top slowest end points to display (must be less than or equal to  {len(k)}):")
+                y=int(input())
+                if 0<=y<=len(k):
+                    for i in range(0,y):
+                        print(f'\n==> {i+1}. {results[k[-1-i]]['Route']} ({results[k[-1-i]]['Time']}ms)')
+                    print('\n\n')
+                else:
+                    print("\n-----> Out of Range Number\n")
+        elif x==3:
+            if len(k)==0:
+                print("\n-----> No Valid Log Found\n")
+            else:
+                print(f"\n-----> Enter the number of top fastest end points to display (must be less than or equal to  {len(k)}):")
+                y=int(input())
+                if 0<=y<=len(k):
+                    for i in range(0,y):
+                        print(f'\n==> {i+1}. {results[k[i]]['Route']} ({results[k[i]]['Time']}ms)')
+                    print('\n\n')
+                else:
+                    print("\n-----> Out of Range Number\n")                    
+        elif x==4:
+            print("\n-----> Results Generated...\n       You can View it through generated Lines_Result.txt file\n")
+        elif x==5:
+            print("\n-----> Frequency Tables Generated...\n       You can View it through generated Report.txt file\n")
+        elif x==6:
+            print('\n-----> Leaving Analyzer...\n')
+            break
+        else:
+            print('\n-----> Enter Valid Number\n')
+
+
 
 def main():
     file=''
@@ -265,16 +379,22 @@ def main():
     else:
         file='test_logs/file.log'
     fd=open(file,'r')
-    res_fd=open('test_logs/Lines_Result.txt','r+')
+    res_fd=open('Lines_Result.txt','r+')
     lines=[]
     status={}
     results={}
     for line in fd:
         lines.append(line) 
+    fd.close()
+    total_logs=len(lines)
+    valid_logs=0
+    corrupted_logs=0
+    average_response_time=0
     for i in range(0,len(lines)):
         res=''
         if lines[i][0]=='\n':
             status[i]=False 
+            corrupted_logs+=1
             continue
         lines[i]=lines[i].split('\n')[0]
         if lines[i][0]=='{':
@@ -283,7 +403,9 @@ def main():
             res=nonjson_parser(lines[i])
         if len(res)==0:
             status[i]=False
+            corrupted_logs+=1
         else:
+            valid_logs+=1
             status[i]=True
             results[i]=res 
     
@@ -292,6 +414,7 @@ def main():
         res_fd.write(f"            LINE: {lines[i]}\n")
         res_fd.write(f"            STATUS: {status[i]}\n")
         if status[i]==True:
+            average_response_time+=results[i]['Time']
             res_fd.write(f"            RESULTS:\n")
             res_fd.write(f"                     Date: {results[i]['Date']}\n")
             res_fd.write(f"                     Time: {results[i]['Orig_Time']}\n")
@@ -301,6 +424,19 @@ def main():
             res_fd.write(f"                     Status: {results[i]['Status']}\n")
             res_fd.write(f"                     Response Time: {results[i]['Time']}\n")
         res_fd.write('\n\n')
+    res_fd.close()
+
+    status_tables=status_table(results)
+    ip_tables=ip_table(results)
+    method_tables=method_table(results)
+    route_tables=route_table(results)
+    results = dict(sorted(results.items(),key=lambda x:x[1]['Time']))
+    generate_analysis_report(status_tables,ip_tables,route_tables,method_tables,results,total_logs,corrupted_logs,valid_logs,average_response_time)
+    cli_menu(results)
+   
+
+
+
 
 if __name__ =="__main__":
     main()

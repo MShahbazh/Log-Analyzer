@@ -219,9 +219,7 @@ def non_json_generator():
 
 fd=open('test_logs/file.log','w+')
 nums=10
-if len(sys.argv)==1:
-    print(f"NO NUMBER OF ENTRIES PROVIDED. TAKING DEFAULT AS {nums}")
-else:
+if len(sys.argv)>1:
     nums=int(sys.argv[1])
 
 for _ in range(0,nums):
