@@ -3,16 +3,18 @@
 A Simple CLI based log Analyzer. It accepts a server log file as input and handles corrupted/damaged lines, parses multiple timestamps and response time formats. It then produces a per line result file `Lines_Result.txt` along with `Report.txt` which contains report/summary of log file. JSON format log lines are also supported   
 
 ## Repo Structure  
-root  
-├── scripts  
-│         └── generation.py    
-├── test_logs  
-│         └── file.log         
-├── main.py              
-├── Lines_Result.txt     
-├── report.txt           
-├── ANSWERS.md           
-└── README.md                
+```text
+root/
+├── scripts/
+│        └── generation.py
+├── test_logs/
+│        └── file.log
+├── main.py
+├── Lines_Result.txt
+├── report.txt
+├── ANSWERS.md
+└── README.md
+```              
 
 ## Requirements  
 
