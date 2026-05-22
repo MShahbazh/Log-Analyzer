@@ -3,15 +3,15 @@
 A Simple CLI based log Analyzer. It accepts a server log file as input and handles corrupted/damaged lines, parses multiple timestamps and response time formats. It then produces a per line result file "Lines_Result.txt". JSON format log lines are also supported   
 
 ## Repo Structure  
-root
-├── scripts
-│   └── generation.py    
-├── test_logs
-│   ├── file.log         
-│   └── Lines_Result.txt 
-├── main.py  
-├── ANSWERS.md
-└── README.md
+root  
+├── scripts  
+│   └── generation.py     
+├── test_logs  
+│   ├── file.log           
+│   └── Lines_Result.txt   
+├── main.py    
+├── ANSWERS.md  
+└── README.md  
 
 ## Requirements  
 
