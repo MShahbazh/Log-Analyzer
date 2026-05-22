@@ -18,4 +18,4 @@ python main.py /path/to/custom/file
 this command also takes another argument. Add the path of file in case of custom log file. In the absence of user provided log file, it analyzes `test_logs/file.log` by default
 
 ## 2) STACK CHOICE
-I had the option of Js, RUST, C++ and Python for this project. However due to time constraints i decided to go with Python CLI as the basic version. Moreover Python also gives immense advantage in string, file and date handling which is difficult to obtain in C++ and RUST. Even tho C++ and RUST are stronger and faster for handling such large data, i had to avoid them due to time constraints. 
+I looked at JS, C++ and RUST and Python for this project but went with Python CLI version due to tight time constraints. Even though RUST and C++ gives superior performance and efficiency for large datasets, they require more development time. Python accelerated the development speed due to its built-in functions. Its built in support for json, filing, string and date manipulation allowed me to quickly code the basic CLI version. 
