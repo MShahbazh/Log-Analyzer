@@ -5,9 +5,9 @@ A Simple CLI based log Analyzer. It accepts a server log file as input and handl
 ## Repo Structure  
 root  
 ├── scripts  
-│   └── generation.py    
+│         └── generation.py    
 ├── test_logs  
-│   └── file.log         
+│         └── file.log         
 ├── main.py              
 ├── Lines_Result.txt     
 ├── report.txt           
