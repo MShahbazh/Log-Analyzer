@@ -1,15 +1,5 @@
-{"Timestamp":"hello","Ip":"38.29.245.148","Methods":"","Routes":"/api/user","Status":"500","Response Time":"301s"}
-Whythe IS WHO IS Why happy nation
-{"Timestamp":"hello","Ip":"87.34.43.217","Methods":"GET","Routes":"/api/user","Status":"400","Response Time":"936s"}
-{"Timestamp":"hello","Ip":"125.15.10.156","Methods":"DELETE","Routes":"/api/login","Status":"200","Response Time":"779s"}
-{"Timestamp":"hello","Ip":"55.177.146.168","Methods":"","Routes":"/api/register","Status":"-","Response Time":"111"}
-2046-08-17 02:55:42.538436 97.33.60.229  /api/user  402ms
-2027-12-19T02:55:42 193.156.221.66  /api/user 200 168s
-happy nationip ip ERROR RANDOM hello world Timestamp Why the hello world WORDS hello world Hello
-the
-2161634142 161.106.48.17 PUT /api/login 400 776
-2183752542 210.200.147.93 POST /api/user  195ms
-Hello# the Timestamp
-{"Timestamp":"hello","Ip":"231.227.221.174","Methods":"POST","Routes":"","Status":"500","Response Time":"41ms"}
-Whyhappy nation WHO IS IS happy nation Timestamp Hello
--ip happy nation ip the ERROR
+2048-09-01T07:22:20 84.40.24.191 GET /api/user 400 405ms
+{"Timestamp":"2033-06-16T07:22:20Z","Ip":"63.0.212.180","Methods":"GET","Routes":"/api/user","Status":"500","Response-Time":"570s"}
+1952216540 254.222.185.233  /api/login 200 403s
+{"Timestamp":"2039-05-30T07:22:20Z","Ip":"127.70.153.46","Methods":"PUT","Routes":"/api/register","Status":"-","Response-Time":"600"}
+{"Timestamp":"2048-05-08 07:22:20","Ip":"113.46.243.58","Methods":"GET","Routes":"/api/user","Status":"400","Response-Time":"874"}

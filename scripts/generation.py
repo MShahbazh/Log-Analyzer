@@ -7,8 +7,10 @@ methods=['GET','POST','DELETE','PUT','']
 routes=['/api/user','/api/login','/api/register','']
 status=['200','400','500','-','']
 units=['ms','s','']
-CRASH_PROB=0.2
-UNCONTROLLED_FORMAT=0.2
+CRASH_PROB=0
+UNCONTROLLED_FORMAT=0
+DATETIMESPLIT=0.2
+GIBB_TEXTEND=0.02
 
 def damage_string(text,type):
     if random.random()<=CRASH_PROB:
@@ -32,9 +34,6 @@ def damage_string(text,type):
                 text+=parts[i]
     return text
         
-        
-
-
 def generate_random_gibberish(x=1):
     s=''
     for i in range(0,x):
@@ -74,7 +73,8 @@ def generate_datetimes():
             new_date=new_date.strftime(f)            
         else:
             new_date=str(new_date)
-       
+        new_date=new_date.split('.')[0]
+        
         x=random.choice([0,1])
         
         if x==0: 
@@ -82,7 +82,7 @@ def generate_datetimes():
                 main_string=new_date
             else:
                 date3=new_date.split(' ')
-                if random.random()<=0:
+                if random.random()>=-DATETIMESPLIT:
                     if random.choice([0,1])==0:
                         main_string= f"{date3[0]}T{date3[1]}Z"
                     else:
@@ -108,8 +108,6 @@ def generate_datetimes():
         elif x==1:
             main_string=str(int(unix_sec))
 
-        if random.random()<=CRASH_PROB:
-            main_string=damage_string(main_string,'json')
     return main_string
        
 def generate_ip():
@@ -121,10 +119,7 @@ def generate_ip():
         ip[0]=random.randint(0,10)
     else:
         ip[0]=random.randint(0,255)
-    text=f"{ip[0]}.{ip[1]}.{ip[2]}.{ip[3]}"
-    if random.random()<=0.05:
-        text=damage_string(text)
-    return text
+    return f"{ip[0]}.{ip[1]}.{ip[2]}.{ip[3]}"
     
 def json_generator():
         a=generate_datetimes()
@@ -132,9 +127,7 @@ def json_generator():
         if a=='':
            s+=''
         else:
-            if a is None: 
-                print(f"NOEN!!! {a}")
-            s+="hello"
+            s+=a
 
         a=generate_ip()
         s+='","Ip":"'
@@ -164,7 +157,7 @@ def json_generator():
         else:
             s+=a
 
-        s+='","Response Time":"'
+        s+='","Response-Time":"'
         a=units[random.randint(0,len(units)-1)]
         s+=str(random.randint(0,1000))
         if a=='':
@@ -218,6 +211,9 @@ def non_json_generator():
             s+=a
         if random.random()<=CRASH_PROB:
             s=damage_string(s,'non')
+        if random.random()<=GIBB_TEXTEND:   
+            s+=' '
+            s+=generate_random_gibberish(random.randint(0,(random_words)-1))
         return s
 
 
@@ -233,12 +229,12 @@ for _ in range(0,nums):
     x=random.random()
     if x>=0.5:
         k=json_generator()
-    elif x>=0.3:
+    elif x<=0.5:
         k=non_json_generator()
-    elif x>=0.05:
-        k=generate_random_gibberish(random.randint(0,len(random_words)-1))
-    elif x>=0:
-        k=''
+    # elif x>=0.05:
+    #     k=generate_random_gibberish(random.randint(0,len(random_words)-1))
+    # elif x>=0:
+    #     k=''
     k+='\n'
     fd.write(k)
 
