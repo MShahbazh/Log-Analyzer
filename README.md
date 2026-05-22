@@ -15,11 +15,11 @@ root
 
 ## Requirements  
 
-. Python 3.8 or higher  
-. No External Dependencies. Only Python Standard Library (datetime,sys,json,random)  
+- Python 3.8 or higher  
+- No External Dependencies. Only Python Standard Library (datetime,sys,json,random)    
 
-### Installing Python (If you don't have)  
-#### Windows  
+## Installing Python (If you don't have)  
+### Windows  
 1. Go to https://www.python.org/downloads/  
 2. Click Download Python 3.x.x  
 3. Run the Installer. Tick "Add Python to PATH" before installation  
