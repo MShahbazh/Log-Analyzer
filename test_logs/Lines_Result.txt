@@ -1,0 +1,41 @@
+==================== LINE 1 ====================
+            LINE: happy nationRANDOM hello world
+            STATUS: False
+
+
+==================== LINE 2 ====================
+            LINE: 1838359140 244.127.117.56 GET /api/user 400 925
+            STATUS: True
+            RESULTS:
+                     Date: 03/04/28
+                     Time: 12/19/00
+                     IP Address: 244.127.117.56
+                     Method: GET
+                     Route: /api/user
+                     Status: 400
+                     Response Time: 925
+
+
+==================== LINE 3 ====================
+            LINE: 1935818340 105.218.163.0 POST  200 246
+            STATUS: False
+
+
+==================== LINE 4 ====================
+            LINE: 2040-07-01T12:19:00Z 97.222.116.35   200 43ms
+            STATUS: False
+
+
+==================== LINE 5 ====================
+            LINE: 2034-06-24T12:19:00 117.140.150.130 POST /api/user  771ms
+            STATUS: True
+            RESULTS:
+                     Date: 24/06/34
+                     Time: 12/19/00
+                     IP Address: 117.140.150.130
+                     Method: POST
+                     Route: /api/user
+                     Status: NO_STATUS
+                     Response Time: 771
+
+

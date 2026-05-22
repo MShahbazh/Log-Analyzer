@@ -235,7 +235,6 @@ def nonjson_parser(line):
                 status_flag=True
                 index['Status']=-1
                 info['Status']="NO_STATUS"
-    
 
     if method_flag and route_flag and time_flag and ip_flag and timestamp:
         return info 
@@ -250,6 +249,15 @@ def json_parser(line):
     main_string=nonjson_parser(main_string)
     return main_string
 
+def analysis(result):
+    routes_table={}
+    status_table={}
+    methods_table={}
+    IP_table={}
+    
+
+    pass
+
 def main():
     file=''
     if len(sys.argv)>1:
@@ -257,6 +265,7 @@ def main():
     else:
         file='test_logs/file.log'
     fd=open(file,'r')
+    res_fd=open('test_logs/Lines_Result.txt','r+')
     lines=[]
     status={}
     results={}
@@ -279,9 +288,19 @@ def main():
             results[i]=res 
     
     for i in range(0,len(lines)):
-        print("STATUS: ",status[i])
+        res_fd.write(f"==================== LINE {i+1} ====================\n")
+        res_fd.write(f"            LINE: {lines[i]}\n")
+        res_fd.write(f"            STATUS: {status[i]}\n")
         if status[i]==True:
-            print(results[i])
+            res_fd.write(f"            RESULTS:\n")
+            res_fd.write(f"                     Date: {results[i]['Date']}\n")
+            res_fd.write(f"                     Time: {results[i]['Orig_Time']}\n")
+            res_fd.write(f"                     IP Address: {results[i]['Ip']}\n")
+            res_fd.write(f"                     Method: {results[i]['Method']}\n")
+            res_fd.write(f"                     Route: {results[i]['Route']}\n")
+            res_fd.write(f"                     Status: {results[i]['Status']}\n")
+            res_fd.write(f"                     Response Time: {results[i]['Time']}\n")
+        res_fd.write('\n\n')
 
 if __name__ =="__main__":
     main()
