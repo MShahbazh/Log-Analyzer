@@ -109,7 +109,7 @@ def nonjson_parser(line):
             a[dates_index]=a[dates_index].replace('/','-')
             t1=date.fromisoformat(a[dates_index])
             t1=t1.strftime('%d/%m/%y')
-            index['Date']=i
+            index['Date']=dates_index
             info['Date']=t1
     i=-1
     j=''
@@ -221,8 +221,12 @@ def nonjson_parser(line):
                 status_flag=True
                 index['Status']=-1
                 info['Status']="NO_STATUS"
-    # print(index)
-    return info
+    
+
+    if method_flag and route_flag and time_flag and ip_flag and timestamp:
+        return info 
+    else: 
+        return {}
 
 def json_parser(line):
     line=json.loads(line)
