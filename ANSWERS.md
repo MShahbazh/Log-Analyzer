@@ -23,3 +23,9 @@ I looked at JS, C++ and RUST and Python for this project but went with Python CL
 ## 3) ONE REAL EDGE CASE
 Although I tried to implement all the edge cases which were mentioned. One of the edge cases which i implemented is to parse without depending on the position. Rather, it will parse based on patterns and formats which allowed me to code the solution easily. Moreover, I implemented parsing for mutiple ways of timestamps such as epoch, separate date and time, different formats. Without it, solving the problem would have been a lot harder. 
 
+## 4) AI USAGE 
+I only used ChatGPT as a quick reference guide to understand project requirments and look up libraries I hadn't used before like datetime. The only other times I used AI were for tough debugging sessions where I got completely stuck on error. 
+One specific thing i changed was how ChatGPT recommended solutions which was based on overengineered nested approach. I ignored that whole strategy and rewrote it using much simple format. 
+
+## 5) HONEST GAP
+
