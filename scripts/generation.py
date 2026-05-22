@@ -7,10 +7,10 @@ methods=['GET','POST','DELETE','PUT','']
 routes=['/api/user','/api/login','/api/register','']
 status=['200','400','500','-','']
 units=['ms','s','']
-CRASH_PROB=0.2
-UNCONTROLLED_FORMAT=0.2
-DATETIMESPLIT=0.2
-GIBB_TEXTEND=0.02
+CRASH_PROB=0.05
+UNCONTROLLED_FORMAT=0.05
+DATETIMESPLIT=0.4
+GIBB_TEXTEND=0.05     
 
 def damage_string(text,type):
     if random.random()<=CRASH_PROB:
@@ -213,7 +213,7 @@ def non_json_generator():
             s=damage_string(s,'non')
         if random.random()<=GIBB_TEXTEND:   
             s+=' '
-            s+=generate_random_gibberish(random.randint(0,(random_words)-1))
+            s+=generate_random_gibberish(random.randint(0,len(random_words)-1))
         return s
 
 

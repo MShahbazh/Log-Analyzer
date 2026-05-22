@@ -14,7 +14,6 @@ def check_response_time(b):
         return True
     else:
         return False
-    
 
 def nonjson_parser(line):
     a=line.split()
@@ -28,7 +27,7 @@ def nonjson_parser(line):
     ip_flag=False
     timestamp=False
 
-    if a[0][0].lower()>='a' and a[0][0].lower()<='z':
+    if a[0][0].lower()>='a' and a[0][0].lower()<='z' or a[0][0]=='#':
         return info
     
     i=-1
@@ -71,7 +70,6 @@ def nonjson_parser(line):
             if timestamp: 
                 break
     if not timestamp:
-        
         count1=0
         count2=0
         times_index=-1
@@ -111,6 +109,8 @@ def nonjson_parser(line):
             t1=t1.strftime('%d/%m/%y')
             index['Date']=dates_index
             info['Date']=t1
+        if dates_index!=-1 and times_index!=-1:
+            timestamp=True
     i=-1
     j=''
     for part in a: 
@@ -175,37 +175,48 @@ def nonjson_parser(line):
             if index['Route']+2<len(a) and check_response_time(a[index['Route']+2]):
                 time_flag=True
                 index['Time']=index['Route']+2
-                info['Time']=a[index['Route']+2]
+                k=a[index['Route']+2]
+                l=-1
+                if 'ms' in a[index['Route']+2]:
+                    k=k.split('ms')[0]
+                    l=int(k)
+                if 's' in a[index['Route']+2]:
+                    k=k.split('s')[0]
+                    l=int(k)*1000
+                info['Time']=l
             else:
                 time_flag=True
                 index['Time']=-1
                 info['Time']="NO_TIME"
         else:
-            # now consdering the situtation that status may or may not be there at all 
+            
             test=''
             if a[index['Route']+1].isdigit():
                 if index['Route']+2<len(a):
                    if check_response_time(a[index['Route']+2]):
                     time_flag=True
                     index['Time']=index['Route']+2
-                    if a[index['Route']+2].isdigit():
-                        info['Time']=a[index['Route']+2]+'ms'
+                    if a[index['Route']+2].isdigit() or 'ms' in a[index['Route']+2]:
+                        k=a[index['Route']+2].split('ms')[0]
+                        info['Time']=int(k)
                     else:
-                        info['Time']=a[index['Route']+2]
+                        if 's' in a[index['Route']+2]:
+                            k=a[index['Route']+2].split('s')[0]
+                            info['Time']=int(k)*1000
                     status_flag=True
                     index['Status']=index['Route']+1
                     info['Status']=a[index['Route']+1]
                    else:
                     time_flag=True
                     index['Time']=index['Route']+1
-                    info['Time']=a[index['Route']+1]+'ms'
+                    info['Time']=int(a[index['Route']+1])
                     status_flag=True
                     index['Status']=-1
                     info['Status']="NO_STATUS"
                 else:  
                     time_flag=True
                     index['Time']=index['Route']+1
-                    info['Time']=a[index['Route']+1]+'ms'
+                    info['Time']=int(a[index['Route']+1])
                     status_flag=True
                     index['Status']=-1
                     info['Status']="NO_STATUS"
@@ -213,7 +224,10 @@ def nonjson_parser(line):
                 if check_response_time(a[index['Route']+1]):
                     time_flag=True
                     index['Time']=index['Route']+1
-                    info['Time']=a[index['Route']+1]
+                    if 'ms' in a[index['Route']+1]:
+                        info['Time']=int(a[index['Route']+1].split('ms')[0])
+                    elif 's' in a[index['Route']+1]:
+                        info['Time']=int(a[index['Route']+1].split('s')[0])*1000
                 else:
                     time_flag=True
                     index['Time']=-1
@@ -236,11 +250,6 @@ def json_parser(line):
     main_string=nonjson_parser(main_string)
     return main_string
 
-
-    
-        
-
-
 def main():
     file=''
     if len(sys.argv)>1:
@@ -262,7 +271,6 @@ def main():
         if lines[i][0]=='{':
             res=json_parser(lines[i])
         else:
-            # then it is definitely non json incl gibberish 
             res=nonjson_parser(lines[i])
         if len(res)==0:
             status[i]=False
