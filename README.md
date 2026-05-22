@@ -1,6 +1,6 @@
 # Log Analyzer
 
-A Simple CLI based log Analyzer. It accepts a server log file as input and handles corrupted/damaged lines, parses multiple timestamps and response time formats. It then produces a per line result file "Lines_Result.txt". JSON format log lines are also supported   
+A Simple CLI based log Analyzer. It accepts a server log file as input and handles corrupted/damaged lines, parses multiple timestamps and response time formats. It then produces a per line result file `Lines_Result.txt`. JSON format log lines are also supported   
 
 ## Repo Structure  
 root  
@@ -43,5 +43,5 @@ The above command will generate 600 log lines. In case of no argument, the progr
 ```bash
 python main.py /path/to/custom/file
 ```
-this command also takes another argument. Add the path of file in case of custom log file. Otherwise in absence of no file, it analyzes test_logs/file.log
+this command also takes another argument. Add the path of file in case of custom log file. In the absence of user provided log file, it analyzes `test_logs/file.log` by default
 
