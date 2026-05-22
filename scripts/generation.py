@@ -2,13 +2,13 @@ import random
 import sys 
 from datetime import datetime,timedelta
 
-random_words=['Hello','Timestamp','Why','WHO','the','IS','hello world','happy nation','ip','RANDOM','WORDS','-','#','ERROR']
+random_words=['Hello','Timestamp','Why','WHO','the','IS','hello world','happy nation','ip','RANDOM','WORDS','ERROR']
 methods=['GET','POST','DELETE','PUT','']
 routes=['/api/user','/api/login','/api/register','']
 status=['200','400','500','-','']
 units=['ms','s','']
-CRASH_PROB=0
-UNCONTROLLED_FORMAT=0
+CRASH_PROB=0.2
+UNCONTROLLED_FORMAT=0.2
 DATETIMESPLIT=0.2
 GIBB_TEXTEND=0.02
 
@@ -82,7 +82,7 @@ def generate_datetimes():
                 main_string=new_date
             else:
                 date3=new_date.split(' ')
-                if random.random()>=-DATETIMESPLIT:
+                if random.random()>=DATETIMESPLIT:
                     if random.choice([0,1])==0:
                         main_string= f"{date3[0]}T{date3[1]}Z"
                     else:
@@ -227,14 +227,14 @@ else:
 for _ in range(0,nums):
     k=''
     x=random.random()
-    if x>=0.5:
+    if x>=0.7:
         k=json_generator()
-    elif x<=0.5:
+    elif x>=0.2:
         k=non_json_generator()
-    # elif x>=0.05:
-    #     k=generate_random_gibberish(random.randint(0,len(random_words)-1))
-    # elif x>=0:
-    #     k=''
+    elif x>=0.05:
+        k=generate_random_gibberish(random.randint(0,len(random_words)-1))
+    elif x>=0.02:
+        k=''
     k+='\n'
     fd.write(k)
 

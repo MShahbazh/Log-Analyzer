@@ -1,6 +1,9 @@
 import sys   
+from datetime import datetime, time, date
+import json
 
 methods=['GET','POST','DELETE','PUT']
+UNIX_CHECK_DIGITS=5
 
 def check_response_time(b):
     if 'ms' in b:
@@ -15,7 +18,7 @@ def check_response_time(b):
 
 def nonjson_parser(line):
     a=line.split()
-    print(a)
+    # print(a)
     info={}
     index={}
     method_flag=False
@@ -23,7 +26,91 @@ def nonjson_parser(line):
     status_flag=False
     time_flag=False
     ip_flag=False
+    timestamp=False
 
+    if a[0][0].lower()>='a' and a[0][0].lower()<='z':
+        return info
+    
+    i=-1
+    for part in a:
+        i+=1
+        if part.isdigit() and len(part)>=UNIX_CHECK_DIGITS:
+            t=int(part)
+            if 0<=t<=999999999999:
+                timestamp=True
+                t=datetime.fromtimestamp(t)
+                t1=t.strftime('%d/%m/%y')
+                t2=t.strftime('%H/%M/%S')
+                index['TimeStamp']=i
+                info['Date']=t1
+                info['Orig_Time']=t2
+                break
+    
+    if not timestamp:
+        i=-1
+        for part in a:
+            i+=1
+            if 'T' in part: 
+                count1=0
+                count2=0
+                for j in part: 
+                    if j==':':
+                        count1+=1
+                    if j=='-' or j=='/':
+                        count2+=1
+                if count1==2 and count2==2:
+                    timestamp=True 
+                    part = part.replace('/', '-')
+                    times=datetime.fromisoformat(part)
+                    t1=times.strftime('%d/%m/%y')
+                    t2=times.strftime('%H/%M/%S')
+                    index['TimeStamp']=i
+                    info['Date']=t1
+                    info['Orig_Time']=t2
+                    break
+            if timestamp: 
+                break
+    if not timestamp:
+        
+        count1=0
+        count2=0
+        times_index=-1
+        dates_index=-1
+        i=-1
+        for part in a:    
+            i+=1
+            count1=0
+            for j in part:                
+                if j==':':
+                    count1+=1
+            if count1==2:
+                times_index=i
+            if times_index!=-1:
+                break
+        i=-1
+        for part in a:
+            i+=1
+            count2=0
+            if '/api' not in part:
+                for j in part: 
+                    if j=='-' or j=='/':
+                        count2+=1
+                if count2==2:
+                    dates_index=i
+                if dates_index!=-1:
+                    break
+                    
+        if times_index!=-1:
+            t1=time.fromisoformat(a[times_index])
+            t1=t1.strftime('%H:%M:%S')
+            index['Orig_Time']=times_index
+            info['Orig_Time']=t1
+        if dates_index!=-1:
+            a[dates_index]=a[dates_index].replace('/','-')
+            t1=date.fromisoformat(a[dates_index])
+            t1=t1.strftime('%d/%m/%y')
+            index['Date']=i
+            info['Date']=t1
     i=-1
     j=''
     for part in a: 
@@ -49,12 +136,10 @@ def nonjson_parser(line):
                             if int(ips[1]==255) and int(ips[0])>=0 and int(ips[0]  <=10):
                                 ip_flag=True
                             if int(ips[1]!=255) and int(ips[0])>=0 and int(ips[0])  <=255:
-                                ip_flag=True
-                                
+                                ip_flag=True                         
                     k-=1
                 if ip_flag:
                     break
-            
     if ip_flag:
         info['Ip']=a[i]
         index['Ip']=i
@@ -136,9 +221,19 @@ def nonjson_parser(line):
                 status_flag=True
                 index['Status']=-1
                 info['Status']="NO_STATUS"
-
-    print(index)
+    # print(index)
     return info
+
+def json_parser(line):
+    line=json.loads(line)
+    main_string=''
+    for i in line.values():
+        main_string+=f'{i} '
+    main_string=nonjson_parser(main_string)
+    return main_string
+
+
+    
         
 
 
@@ -151,24 +246,30 @@ def main():
     fd=open(file,'r')
     lines=[]
     status={}
+    results={}
     for line in fd:
         lines.append(line) 
-    for i in range(0,1):
+    for i in range(0,len(lines)):
+        res=''
         if lines[i][0]=='\n':
             status[i]=False 
+            continue
         lines[i]=lines[i].split('\n')[0]
-        if lines[i][0]=='#' or lines[i][0]=='{':
-            pass
-            # then i will consider it as json
+        if lines[i][0]=='{':
+            res=json_parser(lines[i])
         else:
             # then it is definitely non json incl gibberish 
             res=nonjson_parser(lines[i])
-            if res is None:
-                status[i]=False
-            else:
-                print(res)
-
-
+        if len(res)==0:
+            status[i]=False
+        else:
+            status[i]=True
+            results[i]=res 
+    
+    for i in range(0,len(lines)):
+        print("STATUS: ",status[i])
+        if status[i]==True:
+            print(results[i])
 
 if __name__ =="__main__":
     main()
